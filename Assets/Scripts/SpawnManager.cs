@@ -9,21 +9,28 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private float _spawnTime;
     [SerializeField] private float _spawnRepeatRate;
+    private PlayerController _playerControllerInstance;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating(nameof(SpawnObstacle), _spawnTime, _spawnRepeatRate);
+        _playerControllerInstance = GameObject.Find("Player").GetComponent<PlayerController>();
+        //InvokeRepeating(nameof(SpawnObstacle), _spawnTime, _spawnRepeatRate);
+        Invoke(nameof(SpawnObstacle), _spawnTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     void SpawnObstacle()
     {
         Instantiate(_obstaclePrefab, _startPos, _obstaclePrefab.transform.rotation);
+
+        if(!_playerControllerInstance.isGameOver)
+        {
+            Invoke(nameof(SpawnObstacle), _spawnRepeatRate);
+        }
     }
 }
