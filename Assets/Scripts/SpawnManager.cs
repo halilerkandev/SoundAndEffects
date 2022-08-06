@@ -26,10 +26,9 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnObstacle()
     {
-        Instantiate(_obstaclePrefab, _startPos, _obstaclePrefab.transform.rotation);
-
         if(!_playerControllerInstance.isGameOver)
         {
+            Instantiate(_obstaclePrefab, _startPos, _obstaclePrefab.transform.rotation);
             Invoke(nameof(SpawnObstacle), _spawnRepeatRate);
         }
     }
