@@ -39,7 +39,7 @@ public class MoveLeft : MonoBehaviour
             if (transform.position.x < _leftBound && gameObject.CompareTag("Obstacle"))
                 Destroy(gameObject);
 
-            if (transform.position.x < 0.0f &&
+            if (transform.position.x < 3.0f &&
                 gameObject.CompareTag("Obstacle") &&
                 !_playerControllerInstance.isGameOver &&
                 !isPassed)

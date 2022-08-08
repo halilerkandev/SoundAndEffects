@@ -35,13 +35,13 @@ public class PlayerController : MonoBehaviour
         Physics.gravity *= _gravityModifier;
         Debug.Log("Score: " + score);
 
-        _playerAnimator.SetFloat("Speed_f", 0.4f);
+        _playerAnimator.SetFloat("Speed_f", 0.3f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x >= 0 && !atStartPoint)
+        if (transform.position.x >= 3 && !atStartPoint)
         {
             _playerAnimator.SetFloat("Speed_f", 1.0f);
             atStartPoint = true;
@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
     void MoveForward()
     {
         var posX = transform.position.x;
-        posX = Mathf.Lerp(posX, 1.0f, Time.deltaTime * 2.0f);
+        posX = Mathf.Lerp(posX, 3.5f, Time.deltaTime * 1.2f);
         transform.position = new(posX, transform.position.y, transform.position.z);
     }
 
