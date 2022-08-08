@@ -8,6 +8,10 @@ public class MoveLeft : MonoBehaviour
     private PlayerController _playerControllerInstance;
     [SerializeField] private float _leftBound;
 
+    private bool isPassed = false;
+
+    private bool atStartPoint = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +21,37 @@ public class MoveLeft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!_playerControllerInstance.isGameOver)
-            transform.Translate(_speed * Time.deltaTime * Vector3.left);
+        if(_playerControllerInstance.atStartPoint && !atStartPoint)
+        {
+            atStartPoint = true;
+        }
 
-        if(transform.position.x < _leftBound && gameObject.CompareTag("Obstacle"))
-            Destroy(gameObject);
+        if(atStartPoint)
+        {
+            float currentSpeed = _speed;
+
+            if (_playerControllerInstance.isDashMode)
+                currentSpeed *= 2;
+
+            if (!_playerControllerInstance.isGameOver)
+                transform.Translate(currentSpeed * Time.deltaTime * Vector3.left);
+
+            if (transform.position.x < _leftBound && gameObject.CompareTag("Obstacle"))
+                Destroy(gameObject);
+
+            if (transform.position.x < 0.0f &&
+                gameObject.CompareTag("Obstacle") &&
+                !_playerControllerInstance.isGameOver &&
+                !isPassed)
+            {
+                isPassed = true;
+                if (_playerControllerInstance.isDashMode)
+                    _playerControllerInstance.score += 2;
+                else
+                    _playerControllerInstance.score++;
+                Debug.Log("Score: " + _playerControllerInstance.score);
+            }
+        }
+
     }
 }
